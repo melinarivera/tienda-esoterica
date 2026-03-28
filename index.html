@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Mágica Bruja Efsun · Magia, Rituales & Consultas</title>
+  <meta name="description" content="Consultas de tarot, rituales, amarres y productos esotéricos. Presencial en A Coruña y online a todo el mundo.">
+  <meta name="theme-color" content="#05080a">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- CANVAS BOSQUE ENCANTADO -->
+<canvas id="forest-canvas"></canvas>
+
+<!-- CURSOR VARITA MÁGICA -->
+<div id="cursor-wand">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Varita -->
+    <line x1="6" y1="26" x2="22" y2="10" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Mango -->
+    <rect x="3" y="24" width="5" height="7" rx="1.5" transform="rotate(-45 3 24)" fill="#7d2a3c" stroke="#c9a84c" stroke-width="0.8"/>
+    <!-- Estrella punta -->
+    <polygon points="22,7 23.3,9.8 26.4,10 24.2,12.1 24.8,15.1 22,13.6 19.2,15.1 19.8,12.1 17.6,10 20.7,9.8"
+      fill="#f5e4a8" stroke="#c9a84c" stroke-width="0.5"/>
+    <!-- Destellos -->
+    <line x1="28" y1="4" x2="28" y2="8"  stroke="#f5e4a8" stroke-width="1" stroke-linecap="round" opacity="0.8"/>
+    <line x1="26" y1="6" x2="30" y2="6"  stroke="#f5e4a8" stroke-width="1" stroke-linecap="round" opacity="0.8"/>
+    <line x1="27" y1="3" x2="29" y2="9"  stroke="#e8c96a" stroke-width="0.5" stroke-linecap="round" opacity="0.5" transform="rotate(45 28 6)"/>
+  </svg>
+</div>
+<div id="cursor-trail"></div>
+
+<!-- NAVEGACIÓN -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+      <circle cx="19" cy="19" r="18" stroke="#c9a84c" stroke-width="0.6" stroke-dasharray="2.5 3.5"/>
+      <path d="M19 7C14 7 10 11.5 10 17.5c0 4.5 2.5 8.5 6.5 10L15.5 30h7l-1-2.5c4-1.5 6.5-5.5 6.5-10C28 11.5 24 7 19 7z" fill="rgba(125,42,60,0.5)" stroke="#c9a84c" stroke-width="0.7"/>
+      <path d="M19 7Q23.5 12 23.5 17Q19 15 14.5 17Q14.5 12 19 7Z" fill="rgba(201,168,76,0.45)"/>
+      <circle cx="15" cy="12" r="1.2" fill="#c9a84c" opacity="0.8"/>
+      <circle cx="23" cy="12" r="1.2" fill="#c9a84c" opacity="0.8"/>
+      <path d="M16 20.5L19 23.5L22 20.5" stroke="#c9a84c" stroke-width="0.8" stroke-linecap="round"/>
+      <text x="19" y="35" text-anchor="middle" font-family="serif" font-size="5" fill="#c9a84c" letter-spacing="1.5">✦✦✦</text>
+    </svg>
+    <div>
+      <div class="nav-logo-text">La Mágica Bruja Efsun</div>
+      <div class="nav-logo-sub">Magia · Rituales · Consultas</div>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#tienda">Tienda</a></li>
+    <li><a href="#horoscopo">Horóscopo ✦</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="https://www.instagram.com/lamagica.bruja.efsun" target="_blank" title="Instagram">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@brujaefsun" target="_blank" title="TikTok">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.95a8.17 8.17 0 004.77 1.52V7.02a4.85 4.85 0 01-1-.33z"/></svg>
+      </a>
+    </div>
+    <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20tus%20servicios" target="_blank" class="nav-cta">Reservar ✦</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-fog"></div>
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <div class="hero-badge">Presencial A Coruña · Online mundial</div>
+      <h1 class="hero-title">La Mágica<br>Bruja <span>Efsun</span></h1>
+      <div class="hero-tagline">Magia ancestral · Rituales · Consultas esotéricas</div>
+      <p class="hero-desc">
+        Donde la <strong>magia se convierte en guía</strong>. Tarot, rituales, amarres y limpieza energética para quienes buscan respuestas en el universo.<br><br>
+        Atiendo <strong>presencial en A Coruña</strong> y <strong>online desde cualquier parte del mundo</strong>.
+      </p>
+      <div class="hero-ctas">
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20tus%20servicios" class="btn-primary" target="_blank">
+          <span>✦ Reservar consulta</span>
+        </a>
+        <a href="#servicios" class="btn-secondary">
+          <span>Ver servicios →</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-sigil">
+      <div class="sigil-wrap">
+        <div class="sigil-ring"></div>
+        <div class="sigil-ring"></div>
+        <div class="sigil-ring"></div>
+        <div class="sigil-ring"></div>
+
+        <!-- Puntos cardinales -->
+        <div class="sigil-dot" style="top:8px;left:50%;transform:translateX(-50%);animation-delay:0s"></div>
+        <div class="sigil-dot" style="top:50%;right:8px;transform:translateY(-50%);animation-delay:.8s"></div>
+        <div class="sigil-dot" style="bottom:8px;left:50%;transform:translateX(-50%);animation-delay:1.6s"></div>
+        <div class="sigil-dot" style="top:50%;left:8px;transform:translateY(-50%);animation-delay:2.4s"></div>
+
+        <!-- Puntos diagonales -->
+        <div class="sigil-dot" style="top:14%;right:14%;width:3px;height:3px;opacity:0.5;animation-delay:.4s"></div>
+        <div class="sigil-dot" style="bottom:14%;right:14%;width:3px;height:3px;opacity:0.5;animation-delay:1.2s"></div>
+        <div class="sigil-dot" style="bottom:14%;left:14%;width:3px;height:3px;opacity:0.5;animation-delay:2s"></div>
+        <div class="sigil-dot" style="top:14%;left:14%;width:3px;height:3px;opacity:0.5;animation-delay:2.8s"></div>
+
+        <div class="sigil-center">
+          <div class="sigil-moon">🌙</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="forest-divider">🌿 · · · ✦ · · · 🌿</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="section-tag">Mis servicios</div>
+    <h2 class="section-title">¿En qué puedo ayudarte?</h2>
+    <p class="section-desc">Cada consulta es un espacio sagrado de escucha y guía. Elige el servicio que necesita tu alma.</p>
+    <div class="ornament">✦ · · ✦ · · ✦</div>
+
+    <div class="servicios-grid reveal">
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">🔮</div>
+        <div class="serv-tag">Consulta · Videncia</div>
+        <div class="serv-title">Lectura de Tarot<br>& Videncia</div>
+        <p class="serv-desc">Una lectura personalizada donde las cartas revelan los mensajes del universo para tu situación actual, amor, trabajo y futuro.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 35€</span>
+          <span class="serv-mode">Online · Presencial</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20la%20lectura%20de%20tarot" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">🕯️</div>
+        <div class="serv-tag">Magia · Rituales</div>
+        <div class="serv-title">Rituales de Amor<br>& Amarres</div>
+        <p class="serv-desc">Rituales personalizados trabajados con energía, intención y magia ancestral para atraer, recuperar o proteger el amor.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 60€</span>
+          <span class="serv-mode">Online · Presencial</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20rituales%20de%20amor" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">✨</div>
+        <div class="serv-tag">Energía · Sanación</div>
+        <div class="serv-title">Limpieza Energética<br>& Protección</div>
+        <p class="serv-desc">Eliminación de energías negativas, trabajos, envidias o bloqueos que impiden tu avance. Escudo energético personalizado.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 45€</span>
+          <span class="serv-mode">Online · Presencial</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20limpieza%20energética" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">⭐</div>
+        <div class="serv-tag">Astrología · Destino</div>
+        <div class="serv-title">Carta Astral<br>Personalizada</div>
+        <p class="serv-desc">Análisis completo de tu carta natal. Descubre tu propósito, talentos y los ciclos que marcan tu destino.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 55€</span>
+          <span class="serv-mode">Online</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20mi%20carta%20astral" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">💜</div>
+        <div class="serv-tag">Pareja · Relaciones</div>
+        <div class="serv-title">Consulta de Pareja<br>& Compatibilidad</div>
+        <p class="serv-desc">Análisis energético de la relación, bloqueos entre ambas personas y caminos para fortalecer el vínculo.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 50€</span>
+          <span class="serv-mode">Online · Presencial</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20una%20consulta%20de%20pareja" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+
+      <div class="servicio-card">
+        <div class="serv-glow"></div>
+        <div class="serv-icon">🌿</div>
+        <div class="serv-tag">Trabajo · Prosperidad</div>
+        <div class="serv-title">Rituales de Dinero<br>& Abundancia</div>
+        <p class="serv-desc">Trabajo energético para atraer abundancia, abrir caminos laborales y alejar la escasez de tu vida.</p>
+        <div class="serv-footer">
+          <span class="serv-precio">desde 50€</span>
+          <span class="serv-mode">Online · Presencial</span>
+        </div>
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20rituales%20de%20abundancia" class="btn-wa" target="_blank">📲 Reservar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="forest-divider">🌙 · · · 🍃 · · · 🌙</div>
+
+<!-- TIENDA -->
+<section id="tienda">
+  <div class="section-inner">
+    <div class="tienda-header reveal">
+      <div>
+        <div class="section-tag">Tienda esotérica</div>
+        <h2 class="section-title">Productos mágicos</h2>
+        <p class="section-desc" style="margin-bottom:0">Artículos cargados de energía y seleccionados con intención.</p>
+      </div>
+      <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20ver%20el%20catálogo%20completo" class="btn-secondary" target="_blank">Ver catálogo →</a>
+    </div>
+
+    <div class="productos-grid">
+      <div class="producto-card reveal reveal-delay-1">
+        <div class="producto-img">🕯️<span class="producto-badge">Popular</span></div>
+        <div class="producto-body">
+          <div class="prod-cat">Velas rituales</div>
+          <div class="prod-name">Vela de Amor Roja</div>
+          <p class="prod-desc">Preparada y cargada con hierbas, aceites esenciales e intención para rituales de amor.</p>
+          <div class="prod-footer">
+            <span class="prod-precio">12€</span>
+            <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20pedir%20una%20Vela%20de%20Amor%20Roja" class="btn-carrito" target="_blank">🛒 Pedir</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="producto-card reveal reveal-delay-2">
+        <div class="producto-img">💎</div>
+        <div class="producto-body">
+          <div class="prod-cat">Cristales</div>
+          <div class="prod-name">Cuarzo Rosa del Amor</div>
+          <p class="prod-desc">Cristal natural cargado energéticamente. Ideal para atraer el amor y la armonía.</p>
+          <div class="prod-footer">
+            <span class="prod-precio">18€</span>
+            <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20pedir%20un%20Cuarzo%20Rosa" class="btn-carrito" target="_blank">🛒 Pedir</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="producto-card reveal reveal-delay-3">
+        <div class="producto-img">🌿<span class="producto-badge">Nuevo</span></div>
+        <div class="producto-body">
+          <div class="prod-cat">Kits rituales</div>
+          <div class="prod-name">Kit de Limpieza Energética</div>
+          <p class="prod-desc">Salvia, palo santo, cuarzo ahumado y sal del Himalaya. Con instrucciones detalladas.</p>
+          <div class="prod-footer">
+            <span class="prod-precio">28€</span>
+            <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20pedir%20el%20Kit%20de%20Limpieza%20Energética" class="btn-carrito" target="_blank">🛒 Pedir</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="producto-card reveal reveal-delay-4">
+        <div class="producto-img">🪬</div>
+        <div class="producto-body">
+          <div class="prod-cat">Amuletos</div>
+          <div class="prod-name">Amuleto de Protección</div>
+          <p class="prod-desc">Elaborado a mano con hierbas protectoras y cargado bajo la luna llena.</p>
+          <div class="prod-footer">
+            <span class="prod-precio">22€</span>
+            <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20pedir%20un%20Amuleto%20de%20Protección" class="btn-carrito" target="_blank">🛒 Pedir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:2.5rem" class="reveal">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:1rem">¿Buscas algo personalizado? Escríbeme y lo creamos para ti.</p>
+      <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20busco%20un%20producto%20personalizado" class="btn-wa" target="_blank" style="margin:0 auto">📲 Consultar producto personalizado</a>
+    </div>
+  </div>
+</section>
+
+<div class="forest-divider">✦ · · · 🌙 · · · ✦</div>
+
+<!-- HORÓSCOPO IA -->
+<section id="horoscopo">
+  <div class="section-inner">
+    <div class="horo-grid">
+
+      <div style="display:flex;align-items:center;justify-content:center">
+        <div class="zodiac-wrap reveal">
+          <div class="zodiac-outer"></div>
+          <div class="zodiac-inner"></div>
+          <div class="zodiac-signs">
+            <div class="zs" style="top:6px;left:50%;transform:translateX(-50%)">♈</div>
+            <div class="zs" style="top:17%;right:10%">♉</div>
+            <div class="zs" style="top:42%;right:4%">♊</div>
+            <div class="zs" style="bottom:17%;right:10%">♋</div>
+            <div class="zs" style="bottom:6px;left:50%;transform:translateX(-50%)">♌</div>
+            <div class="zs" style="bottom:17%;left:10%">♍</div>
+            <div class="zs" style="top:42%;left:4%">♎</div>
+            <div class="zs" style="top:17%;left:10%">♏</div>
+            <div class="zs" style="top:9%;left:22%">♐</div>
+            <div class="zs" style="top:9%;right:22%">♑</div>
+            <div class="zs" style="top:28%;right:7%">♒</div>
+            <div class="zs" style="top:28%;left:7%">♓</div>
+          </div>
+          <div class="zodiac-center">🔮</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="section-tag">Horóscopo personalizado</div>
+        <h2 class="section-title">Tu lectura<br>astral con IA</h2>
+        <p class="section-desc">Una lectura astrológica única generada con inteligencia artificial y guiada por la energía de Efsun. Exclusiva y personalizada para ti.</p>
+
+        <div class="horo-form">
+          <div class="horo-form-title">✦ Obtén tu lectura personalizada</div>
+
+          <div class="form-group">
+            <label>Tu signo zodiacal</label>
+            <select id="signo">
+              <option value="">Selecciona tu signo...</option>
+              <option value="Aries">♈ Aries (21 mar – 19 abr)</option>
+              <option value="Tauro">♉ Tauro (20 abr – 20 may)</option>
+              <option value="Géminis">♊ Géminis (21 may – 20 jun)</option>
+              <option value="Cáncer">♋ Cáncer (21 jun – 22 jul)</option>
+              <option value="Leo">♌ Leo (23 jul – 22 ago)</option>
+              <option value="Virgo">♍ Virgo (23 ago – 22 sep)</option>
+              <option value="Libra">♎ Libra (23 sep – 22 oct)</option>
+              <option value="Escorpio">♏ Escorpio (23 oct – 21 nov)</option>
+              <option value="Sagitario">♐ Sagitario (22 nov – 21 dic)</option>
+              <option value="Capricornio">♑ Capricornio (22 dic – 19 ene)</option>
+              <option value="Acuario">♒ Acuario (20 ene – 18 feb)</option>
+              <option value="Piscis">♓ Piscis (19 feb – 20 mar)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" id="nombre-horo" placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label>Área de consulta</label>
+              <select id="area-horo">
+                <option value="general">General</option>
+                <option value="amor">Amor y pareja</option>
+                <option value="trabajo">Trabajo y dinero</option>
+                <option value="salud">Salud y bienestar</option>
+                <option value="familia">Familia</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="horo-precio">
+            <div class="horo-precio-num">9,99€</div>
+            <div class="horo-precio-desc">Lectura personalizada · Resultado inmediato<br>Guardable en pantalla</div>
+          </div>
+
+          <button class="btn-horo" onclick="generarHoroscopo()">
+            <span>🔮</span> Obtener mi lectura astral
+          </button>
+
+          <div id="horo-resultado">
+            <h4 id="horo-titulo">Tu lectura astral</h4>
+            <p id="horo-texto"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="forest-divider">🌿 · · · ✦ · · · 🌿</div>
+
+<!-- INSTAGRAM / REDES -->
+<section id="instagram">
+  <div class="section-inner">
+    <div class="section-tag" style="justify-content:center">Sígueme</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:1rem">Contenido mágico<br>cada día</h2>
+    <p class="section-desc" style="margin:0 auto 2.5rem;text-align:center">Rituales, consejos esotéricos, lecturas en vivo y mucho más. Únete a la comunidad mágica de Efsun.</p>
+
+    <div class="insta-profiles reveal">
+      <a href="https://www.instagram.com/lamagica.bruja.efsun" target="_blank" class="insta-profile-card">
+        <div class="insta-avatar" style="background:linear-gradient(135deg,rgba(131,58,180,.3),rgba(253,29,29,.3),rgba(252,176,69,.3))">🌙</div>
+        <div style="text-align:left">
+          <div class="insta-handle">@la.magica.bruja.efsun</div>
+          <div class="insta-net">Instagram · Sígueme</div>
+        </div>
+      </a>
+      <a href="https://www.tiktok.com/@brujaefsun" target="_blank" class="insta-profile-card">
+        <div class="insta-avatar" style="background:linear-gradient(135deg,rgba(105,201,208,.2),rgba(1,1,1,.3),rgba(238,29,82,.2))">✦</div>
+        <div style="text-align:left">
+          <div class="insta-handle">La Mágica Bruja Efsun</div>
+          <div class="insta-net">TikTok · Sígueme</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="insta-grid reveal" style="max-width:420px;margin:0 auto 2.5rem">
+      <div class="insta-thumb">🕯️</div>
+      <div class="insta-thumb">🔮</div>
+      <div class="insta-thumb">🌙</div>
+      <div class="insta-thumb">✨</div>
+      <div class="insta-thumb">💜</div>
+      <div class="insta-thumb">🌿</div>
+    </div>
+
+    <div style="text-align:center" class="reveal">
+      <a href="https://www.instagram.com/lamagica.bruja.efsun" class="btn-insta" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Seguir en Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="forest-divider">🌙 · · · ✦ · · · 🌙</div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contacto-grid">
+
+      <div class="reveal">
+        <div class="section-tag">Hablemos</div>
+        <h2 class="section-title">Reserva tu<br>consulta</h2>
+        <p style="font-size:.9rem;line-height:1.9;color:var(--text2);margin-bottom:0">
+          Atiendo <strong style="color:var(--text);font-weight:500">presencial en A Coruña</strong> y <strong style="color:var(--text);font-weight:500">online a todo el mundo</strong>. Escríbeme directamente por WhatsApp o sígueme en redes para contenido mágico diario.
+        </p>
+        <div class="contacto-info">
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div>
+              <div class="info-label">Ubicación</div>
+              <div class="info-val">A Coruña, Galicia · Online mundial</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📲</span>
+            <div>
+              <div class="info-label">WhatsApp</div>
+              <div class="info-val">+34 672 894 842</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">📸</span>
+            <div>
+              <div class="info-label">Instagram</div>
+              <div class="info-val">@la.magica.bruja.efsun</div>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon">🎵</span>
+            <div>
+              <div class="info-label">TikTok</div>
+              <div class="info-val">La Mágica Bruja Efsun</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contacto-ctas reveal">
+        <a href="https://wa.me/34672894842?text=Hola%20Efsun%2C%20quiero%20información%20sobre%20tus%20servicios" class="btn-wa-big" target="_blank">
+          <span style="font-size:1.4rem">💬</span> Escribir por WhatsApp
+        </a>
+        <div class="social-btns">
+          <a href="https://www.instagram.com/lamagica.bruja.efsun" class="btn-social ig" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.tiktok.com/@brujaefsun" class="btn-social tt" target="_blank">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.95a8.17 8.17 0 004.77 1.52V7.02a4.85 4.85 0 01-1-.33z"/></svg>
+            TikTok
+          </a>
+        </div>
+        <div class="contacto-nota">
+          <strong>✦ Atención personalizada</strong><br>
+          Respondo personalmente a cada mensaje. Atiendo presencial en A Coruña y online a todo el mundo, en horario flexible.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-wrap">
+          <svg width="28" height="28" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="18" stroke="#c9a84c" stroke-width="0.6" stroke-dasharray="2.5 3.5"/><path d="M19 7C14 7 10 11.5 10 17.5c0 4.5 2.5 8.5 6.5 10L15.5 30h7l-1-2.5c4-1.5 6.5-5.5 6.5-10C28 11.5 24 7 19 7z" fill="rgba(125,42,60,0.5)" stroke="#c9a84c" stroke-width="0.7"/><path d="M19 7Q23.5 12 23.5 17Q19 15 14.5 17Q14.5 12 19 7Z" fill="rgba(201,168,76,0.45)"/></svg>
+          <span style="font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;color:var(--dorado)">La Mágica Bruja Efsun</span>
+        </div>
+        <p class="footer-tagline">Magia ancestral, rituales y consultas esotéricas. Presencial en A Coruña y online a todo el mundo.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/lamagica.bruja.efsun" target="_blank">📸</a>
+          <a href="https://www.tiktok.com/@brujaefsun" target="_blank">🎵</a>
+          <a href="https://wa.me/34672894842" target="_blank">💬</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#servicios">Lectura de Tarot</a></li>
+          <li><a href="#servicios">Rituales de Amor</a></li>
+          <li><a href="#servicios">Limpieza Energética</a></li>
+          <li><a href="#servicios">Carta Astral</a></li>
+          <li><a href="#servicios">Consulta de Pareja</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Más</h4>
+        <ul>
+          <li><a href="#tienda">Tienda esotérica</a></li>
+          <li><a href="#horoscopo">Horóscopo IA</a></li>
+          <li><a href="https://www.instagram.com/lamagica.bruja.efsun" target="_blank">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@brujaefsun" target="_blank">TikTok</a></li>
+          <li><a href="https://wa.me/34672894842" target="_blank">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 · La Mágica Bruja Efsun · Todos los derechos reservados</span>
+      <div class="footer-legal">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
