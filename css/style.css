@@ -938,6 +938,7 @@ h2.section-title {
   transition: border-color .3s;
 }
 .info-item:hover { border-color: var(--border); }
+a.info-item { text-decoration: none; color: inherit; }
 .info-icon { font-size: 1.2rem; flex-shrink: 0; }
 .info-label {
   font-family: 'Cinzel', serif; font-size: 9px;
